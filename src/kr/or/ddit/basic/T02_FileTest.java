@@ -33,7 +33,7 @@ public class T02_FileTest {
 		}
 		System.out.println("-----------------------------");
 		
-		File f3 = new File("e:/D_Other");
+		File f3 = new File("e:/D_Other/phonenum");
 		File[] files = f3.listFiles();
 		for(int i=0; i<files.length; i++){
 			System.out.print(files[i].getName() + " => " );
