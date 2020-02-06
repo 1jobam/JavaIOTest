@@ -15,10 +15,10 @@ public class T13_DataIOStreamTest {
 			DataOutputStream dout = new DataOutputStream(fout);
 			
 			dout.writeUTF("홍길동"); // 문자열 데이터 출력(UTF-8)
-//			dout.writeInt(17); // 정수형으로 데이터 출력
-//			dout.writeFloat(3.14f); // 실수형(Float)으로 출력
-//			dout.writeDouble(3.14); // 실수형(Double)으로 출력
-//			dout.writeBoolean(true); // 논리형으로 출력
+			dout.writeInt(17); // 정수형으로 데이터 출력
+			dout.writeFloat(3.14f); // 실수형(Float)으로 출력
+			dout.writeDouble(3.14); // 실수형(Double)으로 출력
+			dout.writeBoolean(true); // 논리형으로 출력
 			
 			System.out.println("출력 완료...");
 			//====================================================

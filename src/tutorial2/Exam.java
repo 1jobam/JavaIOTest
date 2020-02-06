@@ -1,25 +1,19 @@
 package tutorial2;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 public class Exam {
 	
 	private String re = "e:/D_Other/phonenum/";
 	private Scanner scan;
-	private Map<String, PhoneVO> phoneBook;
 	
 	public Exam() {
 		scan = new Scanner(System.in);
-		phoneBook = new HashMap<>();
 	}
 	
 	// 메뉴를 출력하는 메서드
@@ -79,8 +73,15 @@ public class Exam {
 		
 		String a = re + name + ".txt";
 		
+		File fe = new File(a);
+		
+		if(!fe.isFile()) {
+			System.out.println(name + "님의 전화번호 정보가 없습니다");
+			return;
+		}
+		
 		FileReader fr = new FileReader(a);
-
+		
 		int c;
 		
 		while((c = fr.read()) != -1){
@@ -107,7 +108,9 @@ public class Exam {
 				System.out.println("파일삭제 성공"); 
 			}else{ System.out.println("파일삭제 실패");} 
 		}else{ 
-			System.out.println("파일이 존재하지 않습니다.");}
+			System.out.println("파일이 존재하지 않습니다.");
+			return;
+		}
 
 		System.out.println("삭제 작업 완료...");
 		
@@ -123,15 +126,21 @@ public class Exam {
 		System.out.print("이 름 >> ");
 		String name = scan.next();
 		
+		String b = re + name + ".txt";
+		
+		File fe = new File(b);
+		
+		if(!fe.isFile()) {
+			System.out.println("입력한분이 존재하지 않습니다.");
+			return;
+		}
+		
 		System.out.print("전화번호 >> ");
 		String tel = scan.next();
 		
 		System.out.print("주  소 >> ");
 		scan.nextLine(); // 버퍼에 남아있을지 모를 엔터키값 제거
 		String addr = scan.nextLine();
-		
-		PhoneVO p = new PhoneVO(name, tel, addr);
-		phoneBook.put(name, p); // 같은 key값에 데이터를 저장하면 value값이 변경된다.
 		
 		FileWriter fwr = new FileWriter(re + name + ".txt");
 		
@@ -184,9 +193,13 @@ public class Exam {
 		System.out.print("이 름 >> ");
 		String name = scan.next();
 		
+		String b = "e:\\D_Other\\" + name + ".txt";
+		
+		File fe = new File(b);
+		
 		// 이미 등록된 사람인지 검사
 		// get()메서드로 값을 가져올때 가져올 자료가 없으면 null을 반환한다.
-		if(phoneBook.get(name) != null) {
+		if(fe.isFile()) {
 			System.out.println(name + "씨는 이미 등록된 사람입니다.");
 			return; //메서드 종료
 		}
@@ -199,11 +212,6 @@ public class Exam {
 		//next() 호출 후 nextLine()호출시 혹시 남아있을지 모를 쓰레기 값을 위해 한번 호출한다.
 		scan.nextLine(); 
 		String addr = scan.nextLine();
-		
-		phoneBook.put(name, new PhoneVO(name, tel, addr));
-		
-//		File ne = new File(re + name + ".txt");
-//		ne.createNewFile();
 		
 			// 출력용 OutputStream 객체 생성
 		FileWriter fwr = new FileWriter(re + name + ".txt");
@@ -227,45 +235,3 @@ public class Exam {
 	}
 
 }
-
-/**
- * 전화번호 정보를 저장할 수 있는 VO 클래스
- */
-class PhoneVO{
-	private String name; // 이름
-	private String tel; // 전화번호
-	private String addr; // 주소
-	
-	public PhoneVO(String name, String tel, String addr) {
-		super();
-		this.name = name;
-		this.tel = tel;
-		this.addr = addr;
-	}
-	
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getTel() {
-		return tel;
-	}
-	public void setTel(String tel) {
-		this.tel = tel;
-	}
-	public String getAddr() {
-		return addr;
-	}
-	public void setAddr(String addr) {
-		this.addr = addr;
-	}
-	
-	@Override
-	public String toString() {
-		return "Phone [name=" + name + ", tel= " + tel + ", addr=" + addr + "]";
-	}
-	
-}
-
